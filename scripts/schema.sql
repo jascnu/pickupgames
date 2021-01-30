@@ -35,9 +35,9 @@ CREATE TABLE CompetitiveLevels
 CREATE TABLE PickupUser
 (
   UserID SERIAL NOT NULL,
-  First VARCHAR NOT NULL,
+  FirstName VARCHAR NOT NULL,
   Middle VARCHAR NOT NULL,
-  Last VARCHAR NOT NULL,
+  LastName VARCHAR NOT NULL,
   Email VARCHAR NOT NULL,
   Username VARCHAR NOT NULL,
   AttendanceScore INT NOT NULL,
