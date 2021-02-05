@@ -31,7 +31,7 @@ INSERT INTO public.sports(
 	VALUES ('Tennis', 0);
 
 INSERT INTO public.game(
-	gameid, title, playersrequired, iscompetitive, playersjoined, description, datetime, userid, sportid, locationid, levelid)
+	gameid, title, playersrequired, iscompetitive, playersjoined, description, datetime, ownerid, sportid, locationid, levelid)
 	VALUES (0, 'Dummy Title', 20, true, 0, 'Dummy Description', to_timestamp(1612490936758), 0, 0, 0, 0);
 
 INSERT INTO public.joined(
