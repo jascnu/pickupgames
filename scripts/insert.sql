@@ -6,6 +6,10 @@ INSERT INTO public.pickupuser(
 	userid, firstname, middle, lastname, email, username, attendancescore, passwordhash, zipcode, description, roleid)
 	VALUES (0, 'Dummy', 'U', 'User', 'dummy@gmail.com', 'dummyuser', 0, 'p@ssw0rd', 1234, 'I am a dummy user', 0);
 
+INSERT INTO public.pickupuser(
+	userid, firstname, middle, lastname, email, username, attendancescore, passwordhash, zipcode, description, roleid)
+	VALUES (0, 'Dummy', 'U', 'User', 'dummy2@gmail.com', 'dummyuser2', 0, 'p@ssw0rd', 1234, 'I am a dummy user', 4);
+
 INSERT INTO public.competitivelevels(
 	level, levelid)
 	VALUES ('Beginner', 0);
@@ -29,4 +33,12 @@ INSERT INTO public.sports(
 INSERT INTO public.game(
 	gameid, title, playersrequired, iscompetitive, playersjoined, description, datetime, userid, sportid, locationid, levelid)
 	VALUES (0, 'Dummy Title', 20, true, 0, 'Dummy Description', to_timestamp(1612490936758), 0, 0, 0, 0);
+
+INSERT INTO public.joined(
+	attended, userid, gameid)
+	VALUES (false, 0, 0);
+
+INSERT INTO public.joined(
+	attended, userid, gameid)
+	VALUES (false, 4, 0);
 	
