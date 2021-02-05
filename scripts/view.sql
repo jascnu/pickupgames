@@ -23,22 +23,23 @@ SELECT firstname, middle, lastname, email, username, attendancescore, zipcode, d
 FROM pickupuser
 JOIN role USING(roleid)
 
-	SELECT gl.gameid,
-	gl.title,
-	g.description,
-	gl.sport,
-	gl.level,
-	gl.datetime,
-	gl.address,
-	gl.owner,
-	gl.playersjoined,
-	gl.playersrequired,
-	ag.attendees
-	FROM ((( SELECT game_list.gameid,
-			array_agg(p.username) AS attendees
-			FROM ((game_list
-				JOIN joined j USING (gameid))
-				JOIN pickupuser p USING (userid))
-			GROUP BY game_list.gameid) ag
-		JOIN game_list gl ON ((gl.gameid = ag.gameid)))
-		JOIN game g ON ((g.gameid = gl.gameid)));
+CREATE VIEW game_data AS
+ SELECT gl.gameid,
+    gl.title,
+    g.description,
+    gl.sport,
+    gl.level,
+    gl.datetime,
+    gl.address,
+    gl.owner,
+    gl.playersjoined,
+    gl.playersrequired,
+    ag.attendees
+   FROM ((( SELECT game_list.gameid,
+            array_agg(p.username) AS attendees
+           FROM ((game_list
+             JOIN joined j USING (gameid))
+             JOIN pickupuser p USING (userid))
+          GROUP BY game_list.gameid) ag
+     JOIN game_list gl ON ((gl.gameid = ag.gameid)))
+     JOIN game g ON ((g.gameid = gl.gameid)));
