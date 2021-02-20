@@ -43,14 +43,18 @@ $$;
 
 --Signup
 CREATE OR REPLACE FUNCTION public.signup(IN email text,IN password text,IN firstname text,IN lastname text,IN username text,IN zipcode integer,IN middlename text DEFAULT NULL::text)
-    RETURNS void
+    RETURNS integer
     LANGUAGE 'sql'
     VOLATILE SECURITY DEFINER
     PARALLEL UNSAFE
     COST 100
 AS $BODY$
+
 INSERT INTO pickupuser (email, passwordhash, firstname, lastname, username, middle, zipcode, roleid) VALUES
-    (signup.email, crypt(signup.password, gen_salt('bf', 8)), signup.firstname, signup.lastname, signup.username, signup.middlename, signup.zipcode, 0);
+    (signup.email, crypt(signup.password, gen_salt('bf', 8)), signup.firstname, signup.lastname, signup.username, signup.middlename, signup.zipcode, 0)
+	RETURNING userid;
+
+	
 $BODY$;
 
 
@@ -89,5 +93,5 @@ $BODY$;
 --Grant permission to all users to run signup and login
 GRANT EXECUTE ON FUNCTION
   login(text,text),
-  signup(text, text, text)
+  signup(text, text, text, text, text, integer, text)
   TO anonymous;
