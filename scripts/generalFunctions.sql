@@ -13,3 +13,16 @@ INSERT INTO game (title, playersrequired, iscompetitive, playersjoined, descript
 
 	
 $BODY$;
+
+--Delete game
+CREATE OR REPLACE FUNCTION public.deletegame(IN gameid integer)
+    RETURNS void
+    LANGUAGE 'sql'
+    VOLATILE SECURITY DEFINER
+    PARALLEL UNSAFE
+    COST 100
+AS $BODY$
+DELETE FROM joined WHERE joined.gameid = gameid;
+DELETE FROM game WHERE game.gameid = gameid;
+	
+$BODY$;
