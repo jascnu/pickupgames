@@ -1,14 +1,19 @@
 import React from 'react';
+import {Admin, Resource} from 'react-admin';
 import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
 	Link
   } from "react-router-dom";
+import simpleRestProvider from 'ra-data-simple-rest';
+
 import logo from './logo.svg';
 import './App.css';
 import Signup from './pages/Signup';
 import PageNotFound from './pages/PageNotFound';
+	
+
 function App() {
   return (
     // <div className="App">
@@ -28,11 +33,14 @@ function App() {
     //   </header>
 	// </div>
 	<Router>
-		<div></div>
+		{/* <div></div>
 		<Switch>
 			<Route exact path='/signup' component={Signup}></Route>
 			<Route component={PageNotFound}/>
-		</Switch>
+		</Switch> */}
+		<Admin dataProvider={simpleRestProvider('http://192.168.50.67:8000/')}>
+			<Resource name="signup" create={Signup} />
+		</Admin>
 	</Router>
   );
 }
