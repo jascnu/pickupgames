@@ -12,6 +12,10 @@ class Api {
   signup(email, password, name) {
     return axios.post(API_URL + "/rpc/signup", { email, password, name });
   }
+
+  getGameList() {
+    return axios.get(API_URL + "/game_list");
+  }
 }
 
 export default new Api();
