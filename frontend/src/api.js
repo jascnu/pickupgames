@@ -9,8 +9,8 @@ class Api {
     return axios.post(API_URL + "/rpc/login", { email, password });
   }
 
-  signup(email, password, name) {
-    return axios.post(API_URL + "/rpc/signup", { email, password, name });
+  signup(email, password, firstname, lastname, middlename, zipcode, username) {
+    return axios.post(API_URL + "/rpc/signup", { email, password, firstname, lastname, middlename, zipcode, username });
   }
 
   getGameList() {

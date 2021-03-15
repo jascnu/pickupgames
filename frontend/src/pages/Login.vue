@@ -9,7 +9,7 @@
 				v-model="password"
 				placeholder="Password">
 		</base-input>
-	<base-button slot="footer" type="primary" @click="login" fill>Login</base-button>
+	<base-button :loading="loading" :disabled="loading" slot="footer" type="primary" @click="login" fill>Login</base-button>
 	</card>
 </template>
 
@@ -21,12 +21,13 @@ export default {
 	data() {
 		return {
 			email: "",
-			password: ""
+			password: "",
+			loading: false
 		};
 	},
 	methods: {
       login() {
-        console.log(this.email, this.password);
+	   this.loading = true;
 		Api.login(this.email, this.password)
         .then((res) => {
           setJwtToken(res.data[0].token);
@@ -42,7 +43,7 @@ export default {
             //this.message = error.response.data.message;
 			console.log("Failed to Login");
           }
-          //this.loading = false;
+          this.loading = false;
         });
       }
     }
