@@ -31,20 +31,9 @@
         </card>
       </div>
     </div>
-    <ul style="list-style:none;">
-        <li v-for="item in games" :key="item.gameid">
-          <card>
-          <h5 slot="header" class="title">{{item.title}}</h5>
-          {{item.sport}}
-          {{item.level}}
-          {{item.datetime}}
-          {{item.address}}
-          {{item.owner}}
-          {{item.playersjoined}}
-          {{item.playersrequired}}
-          </card>
-        </li>
-    </ul>
+
+		<game-list-item v-for="game in games" :item=game :key=game.gameid />
+
   </div>
 </template>
 <script>
@@ -56,6 +45,7 @@
   import config from '@/config';
   import Api from '../api';
   import Card from '../components/Cards/Card.vue';
+  import GameListItem from '../components/GameListItem.vue';
 
   export default {
     components: {
@@ -66,6 +56,7 @@
       Card
     },
     data() {
+        GameListItem
       return {
         games: [],
         bigLineChart: {
