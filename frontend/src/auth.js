@@ -18,6 +18,12 @@ export function deleteJwtToken() {
   localStorage.removeItem("accessToken");
 }
 
+export function logout() {
+	localStorage.removeItem("username");
+	localStorage.removeItem("accessToken");
+	location.reload();
+}
+
 export function authHeader() {
   let accessToken = getJwtToken();
 
