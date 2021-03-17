@@ -49,3 +49,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+	.sidebar {
+		display: none;
+	}
+</style>

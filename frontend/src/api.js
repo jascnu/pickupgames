@@ -16,6 +16,10 @@ class Api {
   getGameList() {
     return axios.get(API_URL + "/game_list");
   }
+
+  getProfileInfo(userid) {
+    return axios.get(API_URL + "/profile_page?userid=eq." + userid);
+  }
 }
 
 export default new Api();

@@ -11,7 +11,9 @@
 </template>
 <script>
   import EditProfileForm from './Profile/EditProfileForm';
-  import UserCard from './Profile/UserCard'
+  import UserCard from './Profile/UserCard';
+  import Api from '../api';
+  import { getJwtToken, getUserIdFromToken } from "../auth";
   export default {
     components: {
       EditProfileForm,
@@ -19,16 +21,18 @@
     },
     data() {
       return {
+        returnedUserArray: [],
         model: {
-          company: 'Creative Code Inc.',
-          email: 'mike@email.com',
-          username: 'michael23',
-          firstName: 'Mike',
-          lastName: 'Andrew',
-          address: 'Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09',
-          city: 'Melbourne',
-          country: 'Australia',
-          about: 'Lamborghini Mercy, Your chick she so thirsty, I\'m in that two seat Lambo.'
+          attenScore: 'Not Set',
+          email: 'Not Set',
+          username: 'Not Set',
+          firstName: 'Not Set',
+          lastName: 'Not Set',
+          address: 'Not Set',
+          city: 'Not Set',
+          zipcode: 'Not Set',
+          country: 'Not Set',
+          about: 'Not Set'
         },
         user: {
           fullName: 'Mike Andrew',
@@ -36,6 +40,29 @@
           description: `Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...`,
         }
       }
+    },
+    created() {
+      Api.getProfileInfo(getUserIdFromToken(getJwtToken()))
+        .then((res) => {
+          console.log(res.data[0]);
+          this.returnedUserArray.push(...res.data);
+          this.model.attenScore = this.returnedUserArray[0].attendancescore;
+          this.model.about = this.returnedUserArray[0].description;
+          this.model.firstName = this.returnedUserArray[0].firstname;
+          this.model.lastName = this.returnedUserArray[0].lastname;
+          this.model.username = this.returnedUserArray[0].username;
+          this.model.email = this.returnedUserArray[0].email;
+          this.model.address = this.returnedUserArray[0].address;
+          this.model.zipcode = this.returnedUserArray[0].zipcode;
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.response && error.response.status === 403) {
+            //this.message = error.response.data.message;
+			      console.log("Failed to get user profile");
+          }
+          //this.loading = false;
+        });
     }
   }
 </script>
