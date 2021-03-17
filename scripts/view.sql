@@ -1,5 +1,5 @@
 CREATE VIEW game_list AS
-SELECT game.gameid, game.title, sports.name, game.iscompetitive, game.datetime, location.address, pickupuser.username AS owner, game.playersjoined, game.playersrequired, game.description, competitivelevels.level
+SELECT game.gameid, game.title, sports.name as sport, game.iscompetitive, game.datetime, location.address, pickupuser.username AS owner, game.playersjoined, game.playersrequired, game.description, competitivelevels.level
 FROM game
 INNER JOIN sports ON game.sportid=sports.sportid
 INNER JOIN competitivelevels ON game.levelid=competitivelevels.levelid
