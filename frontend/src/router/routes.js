@@ -17,27 +17,39 @@ const routes = [
   {
     path: "/",
     component: DashboardLayout,
-    redirect: "/dashboard",
+    redirect: "/login",
     children: [
       {
-        path: "dashboard",
+        path: "/dashboard",
         name: "dashboard",
-        component: Dashboard
+        component: Dashboard,
+        meta: {
+          requiresAuth: true
+      }
       },
       {
         path: "profile",
         name: "profile",
-        component: Profile
+        component: Profile,
+        meta: {
+          requiresAuth: true
+      }
 	  },
 	  {
-        path: "login",
+        path: "/login",
         name: "login",
-        component: Login
+        component: Login,
+        meta: {
+          guest: true
+        }
 	  },
 	  {
-        path: "signup",
+        path: "/signup",
         name: "signup",
-        component: Signup
+        component: Signup,
+        meta: {
+          guest: true
+        }
       },
       {
         path: "notifications",

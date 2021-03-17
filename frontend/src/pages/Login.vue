@@ -5,7 +5,7 @@
 				v-model="email"
 				placeholder="Email">
 		</base-input>
-		<base-input label="Password"
+		<base-input type="password" label="Password"
 				v-model="password"
 				placeholder="Password">
 		</base-input>
@@ -30,11 +30,12 @@ export default {
 	   this.loading = true;
 		Api.login(this.email, this.password)
         .then((res) => {
-          setJwtToken(res.data[0].token);
+		  setJwtToken(res.data[0].token);
+		  window.localStorage.setItem("username", "placeholderUserName");
           if (this.$route.params.nextUrl != null) {
             this.$router.push(this.$route.params.nextUrl);
           } else {
-            this.$router.push("/profile");
+            this.$router.push("/dashboard");
           }
         })
         .catch((error) => {

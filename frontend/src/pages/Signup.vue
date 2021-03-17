@@ -9,7 +9,7 @@
 				v-model="username"
 				placeholder="Username">
 		</base-input>
-		<base-input label="Password"
+		<base-input type="password" label="Password"
 				v-model="password"
 				placeholder="Password">
 		</base-input>

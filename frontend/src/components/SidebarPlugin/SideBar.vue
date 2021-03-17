@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar"
+  <div v-if=isLoggedIn class="sidebar"
        :data="backgroundColor">
     <!--
             Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black | darkblue"
@@ -46,7 +46,7 @@
     props: {
       title: {
         type: String,
-        default: "Creative Tim"
+        default: "pickupgames.net"
       },
       backgroundColor: {
         type: String,
@@ -97,7 +97,10 @@
         return this.title.split(' ')
           .map(word => word.charAt(0))
           .join('').toUpperCase();
-      }
+      },
+      isLoggedIn() {
+        return window.localStorage.getItem("username");
+    }
     },
     data() {
       return {

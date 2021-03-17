@@ -486,6 +486,10 @@
         min-height: calc(100vh - 70px);
     }
 
+    > .content.no-auth{
+      padding-left: 30px;
+    }
+
     > .navbar {
         margin-bottom: 0;
     }
@@ -601,6 +605,9 @@
         .main-panel{
           > .content{
             padding-left: 130px;
+          }
+          > .content .no-auth{
+            padding-left: 0px;
           }
         }
 
