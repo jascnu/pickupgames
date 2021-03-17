@@ -20,6 +20,27 @@ class Api {
   getProfileInfo(userid) {
     return axios.get(API_URL + "/profile_page?userid=eq." + userid);
   }
+
+  //I think spread operator is correct here and in updates
+  createGame(game) {
+	return axios.post(API_URL + "/rpc/creategame", ...game);
+  }
+  deleteGame(gameId) {
+	return axios.post(API_URL + "/rpc/deletegame", {gameid: gameId});
+  }
+  deleteUser(userId) {
+	return axios.delete(API_URL + "/pickupuser?userid=eq." + userId);
+  }
+  getUsers() {
+	return axios.get(API_URL + "/pickupuser");
+  }
+
+  updateGame(gameId, updatedFields) {
+	return axios.patch(API_URL + "/game?gameid=eq."+ gameId, ...updatedFields);
+  }
+  updateGame(userId, updatedFields) {
+	return axios.patch(API_URL + "/pickupuser?userid=eq."+ userId, ...updatedFields);
+  }
 }
 
 export default new Api();
