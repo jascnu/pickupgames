@@ -32,7 +32,7 @@
             <div class="search-bar input-group" @click="searchModalVisible = true">
               <!-- <input type="text" class="form-control" placeholder="Search...">
               <div class="input-group-addon"><i class="tim-icons icon-zoom-split"></i></div> -->
-              <button class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal">
+              <button v-if="isLoggedIn" class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal">
                 <i class="tim-icons icon-zoom-split"></i>
               </button>
               <!-- You can choose types of search input -->
@@ -44,7 +44,7 @@
                    :show-close="true">
               <input slot="header" v-model="searchQuery" type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
             </modal>
-            <base-dropdown tag="li"
+            <!-- <base-dropdown tag="li"
                            :menu-on-right="!$rtl.isRTL"
                            title-tag="a" class="nav-item">
               <a slot="title" href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="true">
@@ -69,8 +69,8 @@
               <li class="nav-link">
                 <a href="#" class="nav-item dropdown-item">Another one</a>
               </li>
-            </base-dropdown>
-            <base-dropdown tag="li"
+            </base-dropdown> -->
+            <base-dropdown v-if="isLoggedIn" tag="li"
                            :menu-on-right="!$rtl.isRTL"
                            title-tag="a"
                            class="nav-item"
@@ -85,16 +85,18 @@
                 </p>
               </a>
               <li class="nav-link">
-                <a href="#" class="nav-item dropdown-item">Profile</a>
+                <a href="/#/profile" class="nav-item dropdown-item">Profile</a>
               </li>
               <li class="nav-link">
                 <a href="#" class="nav-item dropdown-item">Settings</a>
               </li>
               <div class="dropdown-divider"></div>
               <li class="nav-link">
-                <a href="#" class="nav-item dropdown-item">Log out</a>
+                <a v-if="isLoggedIn" v-on:click="logout" href="#" class="nav-item dropdown-item">Log out</a>
+                <a v-else href="/#/login" class="nav-item dropdown-item">Log in</a>
               </li>
             </base-dropdown>
+            <a v-else href="/#/login" class="title login-button">Login</a>
           </ul>
         </div>
       </collapse-transition>
@@ -127,6 +129,11 @@
         searchQuery: ''
       };
     },
+    computed: {
+    isLoggedIn() {
+      return window.localStorage.getItem("username");
+    }
+  },
     methods: {
       capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -145,7 +152,12 @@
       },
       toggleMenu() {
         this.showMenu = !this.showMenu;
-      }
+      },
+      logout() {
+      window.localStorage.removeItem("username");
+      window.localStorage.removeItem("accessToken");
+      window.location.reload();
+  }
     }
   };
 </script>
