@@ -2,31 +2,31 @@
 	<card style="color: hsla(0,0%,100%,.7)!important;">
 		<h4 slot="header" class="title">{{item.title}}</h4>
 		<div class="game-list-item">
-			<span>
+			<span class="game-text-item">
 				{{item.owner}}
 			</span>
-			<span>
+			<span class="game-text-item">
 
 				{{item.sport}}
 			</span>
-			<span>
+			<span class="game-text-item">
 				{{item.level}}
 				
 			</span>
-			<span>
+			<span class="game-text-item">
 				{{item.datetime | convertToStandardTime}}
 				
 			</span>
-			<span>
+			<span class="game-text-item">
 				{{item.address}}
 				
 			</span>
-			<span>
+			<span class="game-text-item">
 				{{item.playersjoined}}
 				/{{item.playersrequired}} players
 					
 			</span> 
-			<span>
+			<span class="game-text-item">
 				<base-button :loading="loading" :disabled="loading" type="primary"  @click="toggleJoin">
 					{{isJoined | getJoinButtonText}}
 				</base-button>
@@ -77,5 +77,10 @@ export default {
 		justify-content: space-between;
 		align-items: center; 
 		padding-left: 15px;
+		flex-wrap: wrap;
+	}
+	.game-text-item {
+		text-align: center;
+		padding: 5px 5px 5px 5px;
 	}
 </style>
