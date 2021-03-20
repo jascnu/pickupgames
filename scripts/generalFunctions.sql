@@ -22,7 +22,7 @@ CREATE OR REPLACE FUNCTION public.deletegame(IN gameid integer)
     PARALLEL UNSAFE
     COST 100
 AS $BODY$
-DELETE FROM joined WHERE joined.gameid = gameid;
-DELETE FROM game WHERE game.gameid = gameid;
+DELETE FROM joined WHERE joined.gameid = deletegame.gameid;
+DELETE FROM game WHERE game.gameid = deletegame.gameid;
 	
 $BODY$;

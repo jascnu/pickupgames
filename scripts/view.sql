@@ -7,15 +7,15 @@ INNER JOIN location ON game.locationid=location.locationid
 INNER JOIN pickupuser ON game.ownerid = pickupuser.userid;
 
 CREATE VIEW sport_list AS
-SELECT name
+SELECT name, sportid
 FROM sports;
 
 CREATE VIEW rank_list AS
-SELECT level
+SELECT level, levelid
 FROM competitivelevels;
 
 CREATE VIEW location_list AS
-SELECT address
+SELECT address, locationid
 FROM location;
 
 CREATE VIEW profile_page AS
