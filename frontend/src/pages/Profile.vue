@@ -23,21 +23,18 @@
       return {
         returnedUserArray: [],
         model: {
-          attenScore: 'Not Set',
+          attendancescore: 'Not Set',
           email: 'Not Set',
           username: 'Not Set',
-          firstName: 'Not Set',
-          lastName: 'Not Set',
-          address: 'Not Set',
-          city: 'Not Set',
+          firstname: 'Not Set',
+          lastname: 'Not Set',
           zipcode: 'Not Set',
-          country: 'Not Set',
-          about: 'Not Set'
+          description: 'Not Set'
         },
         user: {
-          fullName: 'Mike Andrew',
-          title: 'Ceo/Co-Founder',
-          description: `Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...`,
+          fullName: 'Not Set',
+          title: 'Not Set',
+          description: 'Not Set'
         }
       }
     },
@@ -46,14 +43,17 @@
         .then((res) => {
           console.log(res.data[0]);
           this.returnedUserArray.push(...res.data);
-          this.model.attenScore = this.returnedUserArray[0].attendancescore;
-          this.model.about = this.returnedUserArray[0].description;
-          this.model.firstName = this.returnedUserArray[0].firstname;
-          this.model.lastName = this.returnedUserArray[0].lastname;
+          this.model.attendancescore = this.returnedUserArray[0].attendancescore;
+          this.model.description = this.returnedUserArray[0].description;
+          this.model.firstname = this.returnedUserArray[0].firstname;
+          this.model.lastname = this.returnedUserArray[0].lastname;
           this.model.username = this.returnedUserArray[0].username;
           this.model.email = this.returnedUserArray[0].email;
-          this.model.address = this.returnedUserArray[0].address;
+          //this.model.address = this.returnedUserArray[0].address;
           this.model.zipcode = this.returnedUserArray[0].zipcode;
+          this.user.fullName = this.returnedUserArray[0].firstname + ' ' + this.returnedUserArray[0].lastname;
+          this.user.title = this.returnedUserArray[0].rolename;
+          this.user.description = this.returnedUserArray[0].description;
         })
         .catch((error) => {
           console.log(error);

@@ -77,14 +77,11 @@ class Api {
     });
   }
   updateUser(userId, updatedFields) {
-    return (
-      axios.patch(API_URL + "/pickupuser?userid=eq." + userId, updatedFields),
-      {
+    return axios.patch(API_URL + "/pickupuser?userid=eq." + userId, updatedFields, {
         headers: {
           Authorization: `Bearer ${getJwtToken()}`
         }
-      }
-    );
+      });
   }
 }
 
