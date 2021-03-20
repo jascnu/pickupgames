@@ -16,12 +16,12 @@
                   <label v-for="(option, index) in bigLineChartCategories"
                          :key="option"
                          class="btn btn-sm btn-primary btn-simple"
-                         :class="{active: bigLineChart.activeIndex === index}"
+                         :class="{active: gamesListPage.activeIndex === index}"
                          :id="index">
                     <input type="radio"
-                           @click="initBigChart(index)"
+                           @click="showGames(index)"
                            name="options" autocomplete="off"
-                           :checked="bigLineChart.activeIndex === index">
+                           :checked="gamesListPage.activeIndex === index">
                     {{option}}
                   </label>
                 </div>
@@ -32,7 +32,13 @@
       </div>
     </div>
 
-		<game-list-item v-for="game in games" :item=game :key=game.gameid />
+    <div v-if="gamesListPage.activeIndex === 0">
+		  <game-list-item v-for="game in gamesListPage.games" :item=game :key=game.gameid />
+    </div>
+    <div v-else-if="gamesListPage.activeIndex === 1 && gamesListPage.createdGames.length > 0" >
+      <game-list-item v-for="game in gamesListPage.createdGames" :item=game :key=game.gameid />
+    </div>
+    <label v-else style="text-align: center; width: 100%;" class="control-label">It looks like you haven't created any games!</label>
 
   </div>
 </template>
@@ -46,6 +52,7 @@
   import Api from '../api';
   import Card from '../components/Cards/Card.vue';
   import GameListItem from '../components/GameListItem.vue';
+  import { getJwtToken, getUserIdFromToken, getusername } from "../auth";
 
   export default {
     components: {
@@ -58,22 +65,10 @@
     data() {
         GameListItem
       return {
-        games: [],
-        bigLineChart: {
-          allData: [
-            [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100],
-            [80, 120, 105, 110, 95, 105, 90, 100, 80, 95, 70, 120],
-            [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130]
-          ],
-          activeIndex: 0,
-          chartData: {
-            datasets: [{ }],
-            labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-          },
-          extraOptions: chartConfigs.purpleChartOptions,
-          gradientColors: config.colors.primaryGradient,
-          gradientStops: [1, 0.4, 0],
-          categories: []
+        gamesListPage: {
+          games: [],
+          createdGames: [],
+          activeIndex: 0
         },
         purpleLineChart: {
           extraOptions: chartConfigs.purpleChartOptions,
@@ -154,44 +149,64 @@
       }
     },
     methods: {
-      initBigChart(index) {
-        let chartData = {
-          datasets: [{
-            fill: true,
-            borderColor: config.colors.primary,
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: config.colors.primary,
-            pointBorderColor: 'rgba(255,255,255,0)',
-            pointHoverBackgroundColor: config.colors.primary,
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data: this.bigLineChart.allData[index]
-          }],
-          labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-        }
-        this.$refs.bigChart.updateGradients(chartData);
-        this.bigLineChart.chartData = chartData;
-        this.bigLineChart.activeIndex = index;
+      showGames(index) {
+        let vm = this;
+       if (index === 0) {
+         Api.getGameList()
+          .then((res) => {
+            console.log(res.data[0]);
+           res.data.forEach(element => {
+             if (!vm.gamesListPage.games.find(obj => obj.gameid === element.gameid)) {
+               vm.gamesListPage.games.push(...res.data);
+             }
+           });
+          })
+          .catch((error) => {
+            console.log(error);
+            if (error.response && error.response.status === 403) {
+              //this.message = error.response.data.message;
+              console.log("Failed to get games");
+            }
+            //this.loading = false;
+          });
+       } else if (index === 1) {
+         Api.getGameByOwner(getusername())
+          .then((res) => {
+            console.log(res.data[0]);
+           res.data.forEach(element => {
+             if (!vm.gamesListPage.createdGames.find(obj => obj.gameid === element.gameid)) {
+               vm.gamesListPage.createdGames.push(...res.data);
+             }
+           });
+          })
+          .catch((error) => {
+            console.log(error);
+            if (error.response && error.response.status === 403) {
+              //this.message = error.response.data.message;
+              console.log("Failed to get games");
+            }
+            //this.loading = false;
+          });
+       }
+        // this.$refs.bigChart.updateGradients(chartData);
+        // this.bigLineChart.chartData = chartData;
+        this.gamesListPage.activeIndex = index;
       }
     },
     created() {
-      Api.getGameList()
-        .then((res) => {
-          console.log(res.data[0]);
-          this.games.push(...res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-          if (error.response && error.response.status === 403) {
-            //this.message = error.response.data.message;
-			      console.log("Failed to get games");
-          }
-          //this.loading = false;
-        });
+      // Api.getGameList()
+      //   .then((res) => {
+      //     console.log(res.data[0]);
+      //     this.gamesListPage.games.push(...res.data);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //     if (error.response && error.response.status === 403) {
+      //       //this.message = error.response.data.message;
+			//       console.log("Failed to get games");
+      //     }
+      //     //this.loading = false;
+      //   });
     },
     mounted() {
       this.i18n = this.$i18n;
@@ -199,7 +214,7 @@
         this.i18n.locale = 'ar';
         this.$rtl.enableRTL();
       }
-      this.initBigChart(0);
+      this.showGames(0);
     },
     beforeDestroy() {
       if (this.$rtl.isRTL) {

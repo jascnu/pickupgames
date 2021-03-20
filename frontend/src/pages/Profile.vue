@@ -37,7 +37,7 @@
         user: {
           fullName: 'Mike Andrew',
           title: 'Ceo/Co-Founder',
-          description: `Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...`,
+          description: ``,
         }
       }
     },
@@ -54,6 +54,8 @@
           this.model.email = this.returnedUserArray[0].email;
           this.model.address = this.returnedUserArray[0].address;
           this.model.zipcode = this.returnedUserArray[0].zipcode;
+          this.user.fullName = `${this.returnedUserArray[0].firstname} ${this.returnedUserArray[0].lastname}`
+          this.user.title = this.returnedUserArray[0].username
         })
         .catch((error) => {
           console.log(error);

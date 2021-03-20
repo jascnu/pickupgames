@@ -16,7 +16,7 @@
 <script>
 
 import Api from "../api";
-import { setJwtToken } from "../auth";
+import { setJwtToken, getUserIdFromToken } from "../auth";
 export default {
 	data() {
 		return {
@@ -30,13 +30,15 @@ export default {
 	   this.loading = true;
 		Api.login(this.email, this.password)
         .then((res) => {
-		  setJwtToken(res.data[0].token);
-		  window.localStorage.setItem("username", "placeholderUserName");
-          if (this.$route.params.nextUrl != null) {
-            this.$router.push(this.$route.params.nextUrl);
-          } else {
-            this.$router.push("/dashboard");
+			Api.getProfileInfo(getUserIdFromToken(res.data[0].token))
+			.then(prof => {
+				setJwtToken(res.data[0].token, prof.data[0].username);
+				if (this.$route.params.nextUrl != null) {
+					this.$router.push(this.$route.params.nextUrl);
+				} else {
+					this.$router.push("/dashboard");
           }
+			})
         })
         .catch((error) => {
           console.log(error);

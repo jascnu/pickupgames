@@ -44,6 +44,84 @@
                    :show-close="true">
               <input slot="header" v-model="searchQuery" type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
             </modal>
+            <base-button v-if="isLoggedIn" style="overflow: visible" type="default" class="btn" @click="modals.modal3 = true">
+                Create Game
+            </base-button>
+            <modal :show.sync="modals.modal3"
+                  body-classes="p-0"
+                  modal-classes="modal-dialog modal">
+                <card type="primary"
+                      header-classes="bg-white pb-5"
+                      body-classes="px-lg-5 py-lg-5"
+                      class="border-0 mb-0">
+                    <template>
+                        <div class="text-muted text-center mb-3">
+                            <h5>Create Pickup Game</h5>
+                        </div>
+                    </template>
+                    <template>
+                        <form role="form">
+                          <div class="row">
+                            <div class="col pr-md-1">
+                              <base-input label="Title"
+                                        placeholder="Title">
+                              </base-input>
+                            </div>
+                            <div class="col pl-md-1">
+                              <base-input label="Date"
+                                        placeholder="Date"
+                                        type="datetime-local">
+                              </base-input>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col pr-md-1">
+                              <base-input label="Num Players Req">
+                                <select type="number" class="text-white-50 form-control">
+                                  <option class="text-black-50">2</option>
+                                  <option class="text-black-50">3</option>
+                                  <option class="text-black-50">4</option>
+                                  <option class="text-black-50">5</option>
+                                  <option class="text-black-50">6</option>
+                                  <option class="text-black-50">7</option>
+                                  <option class="text-black-50">8</option>
+                                  <option class="text-black-50">9</option>
+                                  <option class="text-black-50">10</option>
+                                  <option class="text-black-50">11</option>
+                                  <option class="text-black-50">12</option>
+                                  <option class="text-black-50">13</option>
+                                  <option class="text-black-50">14</option>
+                                  <option class="text-black-50">15</option>
+                                  <option class="text-black-50">16</option>
+                                  <option class="text-black-50">17</option>
+                                  <option class="text-black-50">18</option>
+                                  <option class="text-black-50">19</option>
+                                  <option class="text-black-50" value="20">20+</option>
+                                </select>
+                              </base-input>
+                            </div>
+                            <div class="col pl-md-1">
+                              <base-input label="Sport">
+                                <select class="text-white-50 form-control">
+                                  <option v-for="sport in this.sports" class="text-black-50">item</option>
+                                </select>
+                              </base-input>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <base-input label="Location">
+                                 <select class="text-white-50 form-control"/>
+                              </base-input>
+                            </div>
+                          </div>
+                           <base-checkbox class="">
+                                    is Competitive?
+                          </base-checkbox>
+                        </form>
+                    </template>
+                </card>
+            </modal>
             <!-- <base-dropdown tag="li"
                            :menu-on-right="!$rtl.isRTL"
                            title-tag="a" class="nav-item">
@@ -106,6 +184,8 @@
 <script>
   import { CollapseTransition } from 'vue2-transitions';
   import Modal from '@/components/Modal';
+  import Api from '../../api';
+  import { getJwtToken, getUserIdFromToken } from "../../auth";
 
   export default {
     components: {
@@ -126,7 +206,12 @@
         activeNotifications: false,
         showMenu: false,
         searchModalVisible: false,
-        searchQuery: ''
+        searchQuery: '',
+        modals: {
+          "modal3": false
+        },
+        locations: ['North'],
+        sports: ['Ultimate','Soccer']
       };
     },
     computed: {
