@@ -131,11 +131,12 @@ export default {
       //TODO actually set accurately (could be an attribute on item instead so leaving filter above)
       isJoined: false,
 	  modalVisible: false,
-	
+
     };
   },
   props: {
-    item: Object
+	item: Object,
+	index: Number
   },
   filters: {
     convertToStandardTime: function(value) {
@@ -156,7 +157,9 @@ export default {
 	},
 	deleteGame() {
 		api.deleteGame(this.item.gameid).then((res) => {
-			//TODO remove game from the list somehow, and notify user
+			this.$parent.removeItem(this.index);
+			this.modalVisible = false;
+			//Todo display a success notification at the top of the screen for better ux
 			console.log("Successfully deleted game")
 		}).catch((error) => {
 			console.log(error);

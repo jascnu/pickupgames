@@ -33,10 +33,10 @@
     </div>
 
     <div v-if="gamesListPage.activeIndex === 0">
-		  <game-list-item v-for="game in gamesListPage.games" :item=game :key=game.gameid />
+		  <game-list-item v-for="(game, index) in gamesListPage.games" :item=game :key=game.gameid :index=index />
     </div>
     <div v-else-if="gamesListPage.activeIndex === 1 && gamesListPage.createdGames.length > 0" >
-      <game-list-item v-for="game in gamesListPage.createdGames" :item=game :key=game.gameid />
+      <game-list-item v-for="(game, index) in gamesListPage.createdGames" :item=game :key=game.gameid :index=index />
     </div>
     <label v-else style="text-align: center; width: 100%;" class="control-label">It looks like you haven't created any games!</label>
 
@@ -149,6 +149,18 @@
       }
     },
     methods: {
+		removeItem(index) {
+			//Not the best
+			console.log('Removing Item at: ' + index)
+			if (this.gamesListPage.activeIndex === 0) {
+				console.log("removing from gamelist")
+				this.gamesListPage.games.splice(index, 1);
+			} else {
+				console.log("removing from created gamelist")
+				this.gamesListPage.createdGames.splice(index, 1);	
+			}
+		},
+
       showGames(index) {
         let vm = this;
        if (index === 0) {
