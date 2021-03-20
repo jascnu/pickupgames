@@ -150,7 +150,7 @@
     },
     methods: {
 		removeItem(index) {
-			//Not the best
+			//Not the best, doesn't update other tab
 			console.log('Removing Item at: ' + index)
 			if (this.gamesListPage.activeIndex === 0) {
 				console.log("removing from gamelist")
