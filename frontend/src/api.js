@@ -49,6 +49,27 @@ class Api {
       }
     });
   }
+
+  hasJoined(userid, gameid) {
+    return axios.get(`${API_URL}/joined?userid=eq.${userid}&gameid=eq.${gameid}`)
+  }
+
+  joinGame(joinObject) {
+    return axios.post(API_URL + "/joined", joinObject, {
+      headers: {
+        Authorization: `Bearer ${getJwtToken()}`
+      }
+    });
+  }
+
+  deleteJoin (userid, gameid) {
+    return axios.delete(`${API_URL}/joined?userid=eq.${userid}&gameid=eq.${gameid}`, {
+      headers: {
+        Authorization: `Bearer ${getJwtToken()}`
+      }
+    });
+  }
+
   deleteGame(gameId) {
     return axios.post(
       API_URL + "/rpc/deletegame",
