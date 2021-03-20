@@ -28,6 +28,20 @@ class Api {
     return axios.get(API_URL + "/profile_page?userid=eq." + userid);
   }
 
+  getGameByOwner(username) {
+    return axios.get(API_URL + `/game_list?owner=eq.${username}`);
+  }
+
+  getLocations() {
+    return axios.get(API_URL + `/location_list`);
+  }
+
+  getSports() {
+    return axios.get(API_URL + `/sport_list`);
+  }
+
+  //I think spread operator is correct here and in updates
+
   createGame(game) {
     return axios.post(API_URL + "/rpc/creategame", game, {
       headers: {
