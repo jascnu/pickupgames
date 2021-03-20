@@ -76,7 +76,7 @@ class Api {
       }
     });
   }
-  updateGame(userId, updatedFields) {
+  updateUser(userId, updatedFields) {
     return (
       axios.patch(API_URL + "/pickupuser?userid=eq." + userId, updatedFields),
       {
