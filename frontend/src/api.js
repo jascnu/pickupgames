@@ -35,7 +35,7 @@ class Api {
 
   //I think spread operator is correct here and in updates
   createGame(game) {
-	return axios.post(API_URL + "/rpc/creategame", ...game);
+	return axios.post(API_URL + "/rpc/creategame", game);
   }
   deleteGame(gameId) {
 	return axios.post(API_URL + "/rpc/deletegame", {gameid: gameId});

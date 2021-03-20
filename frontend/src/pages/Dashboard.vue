@@ -157,7 +157,7 @@
             console.log(res.data[0]);
            res.data.forEach(element => {
              if (!vm.gamesListPage.games.find(obj => obj.gameid === element.gameid)) {
-               vm.gamesListPage.games.push(...res.data);
+               vm.gamesListPage.games.push(element);
              }
            });
           })
@@ -175,7 +175,7 @@
             console.log(res.data[0]);
            res.data.forEach(element => {
              if (!vm.gamesListPage.createdGames.find(obj => obj.gameid === element.gameid)) {
-               vm.gamesListPage.createdGames.push(...res.data);
+               vm.gamesListPage.createdGames.push(element);
              }
            });
           })
