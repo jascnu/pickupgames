@@ -152,7 +152,7 @@
       showGames(index) {
         let vm = this;
        if (index === 0) {
-         Api.getGameList()
+         Api.getGameListDetailed()
           .then((res) => {
             console.log(res.data[0]);
            res.data.forEach(element => {

@@ -24,6 +24,10 @@ class Api {
     return axios.get(API_URL + "/game_list");
   }
 
+  getGameListDetailed() {
+    return axios.get(API_URL + "/game_data");
+  }
+
   getProfileInfo(userid) {
     return axios.get(API_URL + "/profile_page?userid=eq." + userid);
   }
@@ -91,14 +95,12 @@ class Api {
     });
   }
   updateUser(userId, updatedFields) {
-    return (
-      axios.patch(API_URL + "/pickupuser?userid=eq." + userId, updatedFields),
+    return axios.patch(API_URL + "/pickupuser?userid=eq." + userId, updatedFields),
       {
         headers: {
           Authorization: `Bearer ${getJwtToken()}`
         }
       }
-    );
   }
 }
 
