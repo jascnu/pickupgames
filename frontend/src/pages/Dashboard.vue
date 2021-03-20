@@ -146,7 +146,7 @@
       },
       bigLineChartCategories() {
         return this.$t('dashboard.chartCategories');
-      }
+      },
     },
     methods: {
       showGames(index) {

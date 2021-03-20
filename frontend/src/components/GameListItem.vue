@@ -36,6 +36,8 @@
 </template>
 <script>
 import BaseButton from './BaseButton.vue';
+import { getJwtToken, getUserIdFromToken, getusername } from "../auth";
+import Api from '../api';
 export default {
   components: { BaseButton },
 	name: "game-list-item",
@@ -44,7 +46,12 @@ export default {
 
 			loading: false,
 			//TODO actually set accurately (could be an attribute on item instead so leaving filter above)
-			isJoined: false
+			isJoined: false,
+			userJoin: {
+					attended: false,
+					userid: 0,
+					gameid: 0
+				}
 		}
 	},
 	props: {
@@ -61,8 +68,43 @@ export default {
 	methods: {
 		toggleJoin() {
 			console.log("Toggling join on " + this.item.gameid);
+			if (this.isJoined === false) {
+				this.userJoin.userid = getUserIdFromToken(getJwtToken());
+				this.userJoin.gameid = this.item.gameid
+				Api.joinGame(this.userJoin)
+					.then(resp => {
+						if (resp.status === 201) {
+							this.userJoined();
+						}
+					})
+			} else if (this.isJoined === true) {
+				Api.deleteJoin(getUserIdFromToken(getJwtToken()), this.item.gameid)
+					.then(resp => {
+						if (resp.status === 204) {
+							this.userJoined();
+						}
+					})
+			}
 			//TODO implement join call
+		},
+		userJoined() {
+			Api.hasJoined(getUserIdFromToken(getJwtToken()), this.item.gameid)
+					.then(resp => {
+						if (resp.data.length > 0) {
+							this.isJoined = true;
+						} else {
+							this.isJoined = false;
+						}
+					})
 		}
+	},
+	watch : {
+		isJoined: function(val) {
+			this.isJoined = val
+		}
+	},
+	mounted() {
+		this.userJoined()
 	}
 }
 
