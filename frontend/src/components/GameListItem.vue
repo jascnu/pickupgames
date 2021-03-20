@@ -113,11 +113,11 @@
   
 </template>
 <script>
-import BaseButton from "./BaseButton.vue";
 import Modal from "@/components/Modal";
-import Card from "./Cards/Card.vue";
-import { getusername } from '../auth';
-import api from '../api';
+import Card from '../components/Cards/Card.vue';
+import BaseButton from './BaseButton.vue';
+import { getJwtToken, getUserIdFromToken, getusername } from "../auth";
+import Api from '../api';
 export default {
   components: {
     BaseButton,
@@ -132,42 +132,87 @@ export default {
       isJoined: false,
 	  modalVisible: false,
 
-    };
-  },
-  props: {
-	item: Object,
-	index: Number
-  },
-  filters: {
-    convertToStandardTime: function(value) {
-      return new Date(value).toLocaleString();
-    },
-    getJoinButtonText: function(value) {
-      return value ? "Unjoin" : "Join";
-    }
-  },
-  methods: {
-    toggleJoin() {
-      console.log("Toggling join on " + this.item.gameid);
-	  //TODO implement join call
-	  this.isJoined = !this.isJoined;
+			loading: false,
+			//TODO actually set accurately (could be an attribute on item instead so leaving filter above)
+			isJoined: false,
+			userJoin: {
+					attended: false,
+					userid: 0,
+					gameid: 0
+				}
+		}
 	},
-	isOwned() {
+
+	props: {
+		item: Object,
+		index: Number
+	},
+
+	
+	filters: {
+		convertToStandardTime: function (value) {
+			return new Date(value).toLocaleString();			
+		},
+		getJoinButtonText: function (value) {
+			return value ? "Unjoin" : "Join";
+		}
+	},
+	methods: {
+		isOwned() {
 		return this.item.owner === getusername() ? true : false;
+		},
+		deleteGame() {
+			Api.deleteGame(this.item.gameid).then((res) => {
+				this.$parent.removeItem(this.index);
+				this.modalVisible = false;
+				//Todo display a success notification at the top of the screen for better ux
+				console.log("Successfully deleted game")
+			}).catch((error) => {
+				console.log(error);
+				console.log(error.response.data)
+			}) 
+		},
+		toggleJoin() {
+			console.log("Toggling join on " + this.item.gameid);
+			if (this.isJoined === false) {
+				this.userJoin.userid = getUserIdFromToken(getJwtToken());
+				this.userJoin.gameid = this.item.gameid
+				Api.joinGame(this.userJoin)
+					.then(resp => {
+						if (resp.status === 201) {
+							this.userJoined();
+						}
+					})
+			} else if (this.isJoined === true) {
+				Api.deleteJoin(getUserIdFromToken(getJwtToken()), this.item.gameid)
+					.then(resp => {
+						if (resp.status === 204) {
+							this.userJoined();
+						}
+					})
+			}
+			//TODO implement join call
+		},
+		userJoined() {
+			Api.hasJoined(getUserIdFromToken(getJwtToken()), this.item.gameid)
+					.then(resp => {
+						if (resp.data.length > 0) {
+							this.isJoined = true;
+						} else {
+							this.isJoined = false;
+						}
+					})
+		}
 	},
-	deleteGame() {
-		api.deleteGame(this.item.gameid).then((res) => {
-			this.$parent.removeItem(this.index);
-			this.modalVisible = false;
-			//Todo display a success notification at the top of the screen for better ux
-			console.log("Successfully deleted game")
-		}).catch((error) => {
-			console.log(error);
-			console.log(error.response.data)
-		})
+	watch : {
+		isJoined: function(val) {
+			this.isJoined = val
+		}
+	},
+	mounted() {
+		this.userJoined()
 	}
   }
-};
 </script>
 <style scoped>
 .title-container {

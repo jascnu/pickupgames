@@ -76,8 +76,8 @@
                           </div>
                           <div class="row">
                             <div class="col pr-md-1">
-                              <base-input label="Num Players Req" v-model="newGame.playersrequired">
-                                <select type="number" class="text-white-50 form-control">
+                              <base-input label="Num Players Req">
+                                <select type="number" class="text-white-50 form-control" v-model="newGame.playersrequired">
                                   <option class="text-black-50">2</option>
                                   <option class="text-black-50">3</option>
                                   <option class="text-black-50">4</option>
@@ -110,8 +110,8 @@
                           </div>
                           <div class="row">
                             <div class="col">
-                              <base-input label="Location" v-model="newGame.locationid">
-                                 <select class="text-white-50 form-control">
+                              <base-input label="Location">
+                                 <select class="text-white-50 form-control" v-model="newGame.locationid">
                                    <option v-for="location in locations" class="text-black-50" v-bind:value="location.locationid">{{location.address}}</option>
                                   </select>
                               </base-input>
@@ -165,7 +165,7 @@
                            menu-classes="dropdown-navbar">
               <a slot="title" href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="true">
                 <div class="photo">
-                  <img src="img/anime3.png">
+                  <img src="img/animeNew.png">
                 </div>
                 <b class="caret d-none d-lg-block d-xl-block"></b>
                 <p class="d-lg-none">
@@ -232,7 +232,7 @@
           description: '',
           iscompetitive: false,
           playersjoined: 1,
-          ownerid: null,
+          ownerid: 0,
           levelid: 0
         }
       };
@@ -284,7 +284,7 @@
         Api.createGame(this.newGame)
             .then(res => {
               console.log(res)
-              modals.modal3 = false;
+              this.modals.modal3 = false;
               this.loading = false;
             })
             .catch((error) => {

@@ -33,7 +33,7 @@ class Api {
   }
 
   getGameByOwner(username) {
-    return axios.get(API_URL + `/game_list?owner=eq.${username}`);
+    return axios.get(API_URL + `/game_data?owner=eq.${username}`);
   }
 
   getLocations() {
@@ -53,6 +53,27 @@ class Api {
       }
     });
   }
+
+  hasJoined(userid, gameid) {
+    return axios.get(`${API_URL}/joined?userid=eq.${userid}&gameid=eq.${gameid}`)
+  }
+
+  joinGame(joinObject) {
+    return axios.post(API_URL + "/joined", joinObject, {
+      headers: {
+        Authorization: `Bearer ${getJwtToken()}`
+      }
+    });
+  }
+
+  deleteJoin (userid, gameid) {
+    return axios.delete(`${API_URL}/joined?userid=eq.${userid}&gameid=eq.${gameid}`, {
+      headers: {
+        Authorization: `Bearer ${getJwtToken()}`
+      }
+    });
+  }
+
   deleteGame(gameId) {
     return axios.post(
       API_URL + "/rpc/deletegame",
@@ -95,12 +116,11 @@ class Api {
     });
   }
   updateUser(userId, updatedFields) {
-    return axios.patch(API_URL + "/pickupuser?userid=eq." + userId, updatedFields),
-      {
+    return axios.patch(API_URL + "/pickupuser?userid=eq." + userId, updatedFields, {
         headers: {
           Authorization: `Bearer ${getJwtToken()}`
         }
-      }
+      });
   }
 }
 
