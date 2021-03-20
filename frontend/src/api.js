@@ -26,11 +26,11 @@ class Api {
   }
 
   getLocations() {
-    return ['North']
+    return axios.get(API_URL + `/location_list`);
   }
 
   getSports() {
-    return ['Ultimate']
+    return axios.get(API_URL + `/sport_list`);
   }
 
   //I think spread operator is correct here and in updates
