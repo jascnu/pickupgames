@@ -181,6 +181,7 @@ export default {
 					.then(resp => {
 						if (resp.status === 201) {
 							this.userJoined();
+							this.item.playersjoined++
 						}
 					})
 			} else if (this.isJoined === true) {
@@ -188,6 +189,7 @@ export default {
 					.then(resp => {
 						if (resp.status === 204) {
 							this.userJoined();
+							this.item.playersjoined--
 						}
 					})
 			}
