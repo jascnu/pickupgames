@@ -112,11 +112,15 @@
     },
     methods: {
     filteredView() {
+	
       this.filters = "?sport=in.("
       this.chosenSports.forEach(element=> this.filters += "\"" + element + "\"" + ",");
       this.filters = this.filters.substring(0, this.filters.length -1);
-      this.filters += ")";
-      this.showGames(0);
+	  this.filters += ")";
+	  if (this.chosenSports.length === 0) this.filters=""
+
+	  this.modalVisible = false;
+	  this.showGames(0);
       /*
       Api.getGameListDetailed(filters)
       .then((res) => {
