@@ -24,8 +24,8 @@ class Api {
     return axios.get(API_URL + "/game_list");
   }
 
-  getGameListDetailed() {
-    return axios.get(API_URL + "/game_data");
+  getGameListDetailed(filteredString = "") {
+    return axios.get(API_URL + "/game_data" + filteredString);
   }
 
   getProfileInfo(userid) {
