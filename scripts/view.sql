@@ -24,7 +24,7 @@ FROM pickupuser
 JOIN role USING(roleid)
 
 CREATE VIEW game_data AS
- SELECT gl.gameid,
+  SELECT gl.gameid,
     gl.title,
     g.description,
     gl.sport,
@@ -32,14 +32,14 @@ CREATE VIEW game_data AS
     gl.datetime,
     gl.address,
     gl.owner,
-    gl.playersjoined,
+    COALESCE(array_length(ag.attendees, 1), 0) AS playersjoined,
     gl.playersrequired,
     ag.attendees
    FROM ((( SELECT game_list.gameid,
-            array_agg(p.username) AS attendees
+            array_remove(array_agg(p.username), NULL::character varying) AS attendees
            FROM ((game_list
-             JOIN joined j USING (gameid))
-             JOIN pickupuser p USING (userid))
+             FULL JOIN joined j USING (gameid))
+             FULL JOIN pickupuser p USING (userid))
           GROUP BY game_list.gameid) ag
      JOIN game_list gl ON ((gl.gameid = ag.gameid)))
      JOIN game g ON ((g.gameid = gl.gameid)));
