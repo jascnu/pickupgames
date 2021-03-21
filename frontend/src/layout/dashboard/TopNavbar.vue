@@ -184,7 +184,10 @@
                 <a v-else href="/#/login" class="nav-item dropdown-item">Log in</a>
               </li>
             </base-dropdown>
-            <a v-else href="/#/login" class="title login-button">Login</a>
+			<div v-else>
+				<a href="/#/login" class="title login-button">Login </a>
+				<a href="/#/signup" class="title login-button">Signup</a>
+			</div>
           </ul>
         </div>
       </collapse-transition>

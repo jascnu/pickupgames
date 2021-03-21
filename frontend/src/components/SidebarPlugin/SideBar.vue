@@ -18,7 +18,7 @@
               alt="">
           </div>
         </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+        <a href="https://github.com/jascnu/pickupgamesf" class="simple-text logo-normal">
           {{title}}
         </a>
       </div>
