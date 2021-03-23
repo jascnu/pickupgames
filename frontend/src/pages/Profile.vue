@@ -41,7 +41,7 @@
     created() {
       Api.getProfileInfo(getUserIdFromToken(getJwtToken()))
         .then((res) => {
-          console.log(res.data[0]);
+          // console.log(res.data[0]);
           this.returnedUserArray.push(...res.data);
           this.model.attendancescore = this.returnedUserArray[0].attendancescore;
           this.model.description = this.returnedUserArray[0].description;
@@ -56,10 +56,10 @@
           this.user.description = this.returnedUserArray[0].description;
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
           if (error.response && error.response.status === 403) {
             //this.message = error.response.data.message;
-			      console.log("Failed to get user profile");
+			      // console.log("Failed to get user profile");
           }
           //this.loading = false;
         });

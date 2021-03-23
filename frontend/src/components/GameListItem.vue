@@ -166,7 +166,11 @@ export default {
 				this.$parent.removeItem(this.index);
 				this.modalVisible = false;
 				//Todo display a success notification at the top of the screen for better ux
-				console.log("Successfully deleted game")
+				if (res.status === 200) {
+                   this.$notify({type: 'success', horizontalAlign: 'center', message: `Successfully deleted game`})
+                 } else {
+                    this.$notify({type: 'danger', horizontalAlign: 'center', message: `Unable to delete game`})
+                 }
 			}).catch((error) => {
 				console.log(error);
 				console.log(error.response.data)

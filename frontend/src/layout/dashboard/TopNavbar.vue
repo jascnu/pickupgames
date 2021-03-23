@@ -64,20 +64,20 @@
                           <div class="row">
                             <div class="col pr-md-1">
                               <base-input label="Title"
-                                        placeholder="Title" v-model="newGame.title">
+                                        placeholder="Title" v-model="newGame.title" required>
                               </base-input>
                             </div>
                             <div class="col pl-md-1">
                               <base-input label="Date"
                                         placeholder="Date"
-                                        type="datetime-local" v-model="newGame.datetime">
+                                        type="datetime-local" v-model="newGame.datetime" required>
                               </base-input>
                             </div>
                           </div>
                           <div class="row">
                             <div class="col pr-md-1">
                               <base-input label="Num Players Req">
-                                <select type="number" class="text-white-50 form-control" v-model="newGame.playersrequired">
+                                <select type="number" class="text-white-50 form-control" v-model="newGame.playersrequired" required>
                                   <option class="text-black-50">2</option>
                                   <option class="text-black-50">3</option>
                                   <option class="text-black-50">4</option>
@@ -102,7 +102,7 @@
                             </div>
                             <div class="col pl-md-1">
                               <base-input label="Sport">
-                                <select class="text-white-50 form-control" v-model="newGame.sportid">
+                                <select class="text-white-50 form-control" v-model="newGame.sportid" required>
                                   <option v-for="sport in sports" class="text-black-50" v-bind:value="sport.sportid">{{sport.name}}</option>
                                 </select>
                               </base-input>
@@ -111,7 +111,7 @@
                           <div class="row">
                             <div class="col">
                               <base-input label="Location">
-                                 <select class="text-white-50 form-control" v-model="newGame.locationid">
+                                 <select class="text-white-50 form-control" v-model="newGame.locationid" required>
                                    <option v-for="location in locations" class="text-black-50" v-bind:value="location.locationid">{{location.address}}</option>
                                   </select>
                               </base-input>
@@ -286,12 +286,17 @@
         this.newGame.ownerid = getUserIdFromToken(getJwtToken())
         Api.createGame(this.newGame)
             .then(res => {
-              console.log(res)
+              // console.log(res)
               this.modals.modal3 = false;
               this.loading = false;
+              if (res.status === 200) {
+                   this.$notify({type: 'success', horizontalAlign: 'center', message: `Successfully created game named \"${this.newGame.title}\"`})
+                 } else {
+                    this.$notify({type: 'danger', horizontalAlign: 'center', message: `Unable to create game`})
+                 }
             })
             .catch((error) => {
-              console.log(error);
+              // console.log(error);
               this.loading = false;
             })
       }

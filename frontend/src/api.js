@@ -46,6 +46,14 @@ class Api {
 
   //I think spread operator is correct here and in updates
 
+  createLocation(address) {
+    return axios.post(`${API_URL}/location`, address, {
+      headers: {
+        Authorization: `Bearer ${getJwtToken()}`
+      }
+    });
+  }
+
   createGame(game) {
     return axios.post(API_URL + "/rpc/creategame", game, {
       headers: {
