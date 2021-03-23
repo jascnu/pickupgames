@@ -140,37 +140,37 @@
     getSportsList() {
       Api.getSports()
         .then((res) => {
-          console.log(res.data[0]);
+          // console.log(res.data[0]);
           this.sports = res.data;
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
           if (error.response && error.response.status === 403) {
             //this.message = error.response.data.message;
-			console.log("Failed to get sports list");
+			// console.log("Failed to get sports list");
           }
           this.loading = false;
         });
     },
 		removeItem(index) {
 			//Not the best, doesn't update other tab
-			console.log('Removing Item at: ' + index)
+			// console.log('Removing Item at: ' + index)
 			if (this.gamesListPage.activeIndex === 0) {
-				console.log("removing from gamelist")
+				// console.log("removing from gamelist")
 				this.gamesListPage.games.splice(index, 1);
 			} else {
-				console.log("removing from created gamelist")
+				// console.log("removing from created gamelist")
 				this.gamesListPage.createdGames.splice(index, 1);	
 			}
 		},
 
       showGames(index) {
-        console.log(this.filters);
+        // console.log(this.filters);
         let vm = this;
        if (index === 0) {
          Api.getGameListDetailed(this.filters)
           .then((res) => {
-            console.log(res.data[0]);
+            // console.log(res.data[0]);
            //res.data.forEach(element => {
            //  if (!vm.gamesListPage.games.find(obj => obj.gameid === element.gameid)) {
            //    vm.gamesListPage.games.push(element);
@@ -179,17 +179,17 @@
            vm.gamesListPage.games = res.data;
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
             if (error.response && error.response.status === 403) {
               //this.message = error.response.data.message;
-              console.log("Failed to get games");
+              // console.log("Failed to get games");
             }
             //this.loading = false;
           });
        } else if (index === 1) {
          Api.getGameByOwner(getusername())
           .then((res) => {
-            console.log(res.data[0]);
+            // console.log(res.data[0]);
            //res.data.forEach(element => {
            //  if (!vm.gamesListPage.createdGames.find(obj => obj.gameid === element.gameid)) {
            //    vm.gamesListPage.createdGames.push(element);
@@ -198,10 +198,10 @@
            vm.gamesListPage.createdGames = res.data;
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
             if (error.response && error.response.status === 403) {
               //this.message = error.response.data.message;
-              console.log("Failed to get games");
+              // console.log("Failed to get games");
             }
             //this.loading = false;
           });

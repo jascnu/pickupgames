@@ -41,10 +41,10 @@ export default {
 			})
         })
         .catch((error) => {
-          console.log(error);
+        //   console.log(error);
           if (error.response && error.response.status === 403) {
             //this.message = error.response.data.message;
-			console.log("Failed to Login");
+			// console.log("Failed to Login");
           }
           this.loading = false;
         });

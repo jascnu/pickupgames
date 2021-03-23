@@ -64,7 +64,10 @@ const routes = [
       {
         path: "maps",
         name: "maps",
-        component: Maps
+        component: Maps,
+        meta: {
+          requiresAuth: true
+      }
       },
       {
         path: "typography",
