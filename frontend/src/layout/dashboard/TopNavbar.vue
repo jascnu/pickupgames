@@ -184,14 +184,14 @@
                 <a v-else href="/#/login" class="nav-item dropdown-item">Log in</a>
               </li>
             </base-dropdown>
-			<div v-else>
-				<a href="/#/login" class="title login-button">Login </a>
-				<a href="/#/signup" class="title login-button">Signup</a>
-			</div>
           </ul>
         </div>
       </collapse-transition>
     </div>
+    <div class="row" style="flex-wrap: nowrap">
+				  <a href="/#/login" class="btn btn-primary col">Login</a>
+				  <a href="/#/signup" class="btn btn-default col">Signup</a>
+      </div>
   </nav>
 </template>
 <script>
