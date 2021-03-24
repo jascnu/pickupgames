@@ -7,7 +7,7 @@
 		</base-input>
 		<base-input type="password" label="Password"
 				v-model="password"
-				placeholder="Password">
+				placeholder="Password" v-on:keyup.enter="login">
 		</base-input>
 	<base-button :loading="loading" :disabled="loading" slot="footer" type="primary" @click="login" fill>Login</base-button>
 	</card>
