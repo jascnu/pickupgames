@@ -11,23 +11,23 @@
       >
     </div>
     
-    <div class="game-list-item">
-      <span class="game-text-item">
+    <div class="game-list-item row">
+      <span class="game-text-item col pr-md-1">
         {{ item.owner }}
       </span>
-      <span class="game-text-item">
+      <span class="game-text-item col pr-md-1">
         {{ item.sport }}
       </span>
-      <span class="game-text-item">
+      <span class="game-text-item col pr-md-1">
         {{ item.level }}
       </span>
-      <span class="game-text-item">
+      <span class="game-text-item col pr-md-1">
         {{ item.datetime | convertToStandardTime }}
       </span>
-      <span class="game-text-item">
+      <span class="game-text-item col pr-md-1">
         {{ item.address }}
       </span>
-      <span class="game-text-item">
+      <span class="game-text-item col pr-md-1">
         {{ item.playersjoined }}
         /{{ item.playersrequired }} players
       </span>
